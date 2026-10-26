@@ -1,4 +1,11 @@
-expenses = []
+import json
+
+try:
+  with open("expenses.json", "r") as file:
+    expenses = json.load(file)
+except (FileNotFoundError, json.JSONDecodeError):
+  expenses = []
+  
 while True: 
   print("1. Add Expense")
   print("2. View Expenses")
@@ -18,6 +25,8 @@ while True:
     description = input("Description: ")
     expense = {"amount": amount, "category": category, "description": description}
     expenses.append(expense)
+    with open("expenses.json", "w") as file:
+      json.dump(expenses, file)
     print("Expense Added!")
   elif choice == "2":
     if len(expenses) == 0:
